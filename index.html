@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anagram Checker</title>
+<style>
+body{font-family:Arial;background:#f5f3ff;padding:25px}
+main{max-width:500px;margin:40px auto;background:white;padding:30px;border-radius:16px}
+input{width:100%;padding:13px;margin:10px 0;box-sizing:border-box;border:1px solid #c4b5fd;border-radius:8px}
+button{width:100%;background:#7c3aed;color:white;padding:14px;border:0;border-radius:8px;cursor:pointer}
+#result{background:#ede9fe;padding:20px;margin-top:20px;border-radius:8px;text-align:center;font-size:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Anagram Checker</h1>
+<p>Discover whether two words contain the same letters.</p>
+<input id="first" placeholder="Enter first word">
+<input id="second" placeholder="Enter second word">
+<button onclick="check()">Check Anagram</button>
+<div id="result">Result: --</div>
+</main>
+<script>
+function normalize(text){
+ return [...text.toLowerCase().normalize("NFC")
+ .replace(/[^\p{L}\p{N}\p{M}]/gu,"")].sort().join("");
+}
+function check(){
+ const a=normalize(document.getElementById("first").value);
+ const b=normalize(document.getElementById("second").value);
+ const result=document.getElementById("result");
+ if(!a||!b){
+  result.textContent="Please enter both words.";
+  return;
+ }
+ result.textContent=a===b?
+ "Yes! These are anagrams.":
+ "No, these are not anagrams.";
+ result.style.color=a===b?"#15803d":"#dc2626";
+}
+</script>
+</body>
+</html>
