@@ -2,42 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Anagram Checker</title>
 <style>
-body{font-family:Arial;background:#f5f3ff;padding:25px}
-main{max-width:500px;margin:40px auto;background:white;padding:30px;border-radius:16px}
-input{width:100%;padding:13px;margin:10px 0;box-sizing:border-box;border:1px solid #c4b5fd;border-radius:8px}
-button{width:100%;background:#7c3aed;color:white;padding:14px;border:0;border-radius:8px;cursor:pointer}
-#result{background:#ede9fe;padding:20px;margin-top:20px;border-radius:8px;text-align:center;font-size:20px}
+body{font-family:Arial;background:#fff7ed;padding:25px}
+main{max-width:500px;margin:auto;background:white;padding:25px;border-radius:15px}
+input{width:100%;padding:12px;box-sizing:border-box;margin:10px 0}
+button{padding:12px 18px;background:#ea580c;color:white;border:0;border-radius:7px;cursor:pointer}
+#result{padding:15px;background:#ffedd5;margin-top:15px;border-radius:8px}
 </style>
 </head>
 <body>
 <main>
 <h1>Anagram Checker</h1>
-<p>Discover whether two words contain the same letters.</p>
-<input id="first" placeholder="Enter first word">
-<input id="second" placeholder="Enter second word">
-<button onclick="check()">Check Anagram</button>
-<div id="result">Result: --</div>
+<p>Compare two words or phrases.</p>
+<input id="first" placeholder="First word or phrase">
+<input id="second" placeholder="Second word or phrase">
+<button onclick="check()">Compare Text</button>
+<div id="result">Your result will appear here.</div>
 </main>
 <script>
 function normalize(text){
- return [...text.toLowerCase().normalize("NFC")
- .replace(/[^\p{L}\p{N}\p{M}]/gu,"")].sort().join("");
+ return text.toLowerCase().replace(/[^a-z0-9]/g,"").split("").sort().join("");
 }
 function check(){
- const a=normalize(document.getElementById("first").value);
- const b=normalize(document.getElementById("second").value);
+ const a=document.getElementById("first").value;
+ const b=document.getElementById("second").value;
  const result=document.getElementById("result");
- if(!a||!b){
-  result.textContent="Please enter both words.";
+ if(!a.trim()||!b.trim()){
+  result.textContent="Please enter both texts.";
   return;
  }
- result.textContent=a===b?
- "Yes! These are anagrams.":
- "No, these are not anagrams.";
- result.style.color=a===b?"#15803d":"#dc2626";
+ const first=normalize(a),second=normalize(b);
+ if(!first||!second){
+  result.textContent="Enter valid letters or numbers.";
+  return;
+ }
+ result.textContent=first===second
+ ?"The two texts are anagrams."
+ :"The two texts are not anagrams.";
 }
 </script>
 </body>
